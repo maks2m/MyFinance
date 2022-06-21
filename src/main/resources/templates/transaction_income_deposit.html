@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Income Deposit</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="transaction_income_deposit_fragment">
+    <a href="transaction-income-deposit/new">New Transaction Income Deposit</a>
+    <h3>Transaction Income Deposit lists</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="transaction_income_deposit_thead_fragment">
+                <th>id</th>
+                <th>Income</th>
+                <th>Deposit</th>
+                <th>Money</th>
+                <th>Date</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transactionIncomeDeposit : ${transactionIncomeDepositList}">
+            <div th:fragment="transaction_income_deposit_tbody_fragment">
+                <td th:text="${transactionIncomeDeposit.getId()}"></td>
+                <td th:text="${transactionIncomeDeposit.getIncome().getName()}"></td>
+                <td th:text="${transactionIncomeDeposit.getDeposit().getName()}"></td>
+                <td th:text="${transactionIncomeDeposit.getMoney()}"></td>
+                <td th:text="${{transactionIncomeDeposit.getDate()}}"></td>
+
+                <td><a th:href="@{/transaction-income-deposit/{id}(id=${transactionIncomeDeposit.getId()})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/transaction-income-deposit/{id}(id=${transactionIncomeDeposit.getId()})}" method="post">
+                        <input type="submit" value="Del"/>
+                    </form>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Income</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="income_fragment">
+    <a href="income/new">New income</a>
+    <h3>Income lists</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="income_thead_fragment">
+                <th>id</th>
+                <th>Name</th>
+                <th>PlanMoney</th>
+                <th>FactMoney</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="income : ${incomeList}">
+            <div th:fragment="income_tbody_fragment">
+                <td th:text="${income.getId()}"></td>
+                <td th:text="${income.getName()}"></td>
+                <td th:text="${income.getPlanMoney()}"></td>
+                <td th:text="${income.getFactMoney()}"></td>
+
+                <td><a th:href="@{/income/{id}(id=${income.getId()})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/income/{id}(id=${income.getId()})}" method="post">
+                        <input type="submit" value="Del"/>
+                    </form>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

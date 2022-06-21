@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Role edit</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+
+    <table class="table">
+        <caption><h3>Role edit</h3></caption>
+        <tr>
+            <div th:insert="~{role :: role_thead_fragment}"></div>
+        </tr>
+        <form action="#" th:action="@{/role}" th:object="${roles}" method="post">
+            <tr>
+                <input type="hidden" th:field="*{id}" name="id"/>
+                <th th:text="${(roles.getId()!=0) ? roles.getId() : ''}"></th>
+                <th><input type="text" th:field="*{role}"/></th>
+
+                <th><input type="submit" value="Save"/></th>
+                <th><input type="reset" value="Cancel"/></th>
+            </tr>
+        </form>
+
+    </table>
+</body>
+</html>

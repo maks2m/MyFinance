@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Deposit</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="deposit_fragment">
+    <a href="deposit/new">New deposit</a>
+    <h3>Deposit lists</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="deposit_thead_fragment">
+                <th>id</th>
+                <th>Name</th>
+                <th>Money</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="deposit : ${depositList}">
+            <div th:fragment="deposit_tbody_fragment">
+                <td th:text="${deposit.getId()}"></td>
+                <td th:text="${deposit.getName()}"></td>
+                <td th:text="${deposit.getMoney()}"></td>
+
+                <td><a th:href="@{/deposit/{id}(id=${deposit.getId()})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/deposit/{id}(id=${deposit.getId()})}" method="post">
+                        <input type="submit" value="Del"/>
+                    </form>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

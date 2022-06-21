@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User edit</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+
+<div th:if="${errorAddUser}">
+    <div th:text="${errorAddUser}"></div>
+</div>
+
+    <table class="table">
+        <caption><h3>User edit</h3></caption>
+        <tr>
+            <div th:insert="~{user :: user_thead_fragment}"></div>
+        </tr>
+        <form th:action="@{/user}" method="post">
+            <tr>
+                <input type="hidden" th:value="${(user.getId()!=0) ? user.getId() : ''}" name="id"/>
+                <th th:text="${(user.getId()!=0) ? user.getId() : ''}"></th>
+                <th><input type="text" th:value="${user.getUsername()}" name="username"/></th>
+                <th><input type="password" name="password"/></th>
+                <th><input type="text" th:value="${user.getFullName()}" name="full_name"/></th>
+                <th><input type="text" th:value="${user.getFirstName()}" name="first_name"/></th>
+                <th><input type="text" th:value="${user.getLastName()}" name="last_name"/></th>
+                <th>
+                    <div th:each="role : ${roleList}">
+                        <label>
+                            <input type="checkbox" th:name="${role.getRole()}" th:checked= "${#lists.contains(user.getRoles(), role)}"
+                                   th:utext="${role.getRole()}"/>
+                        </label>
+                    </div>
+                </th>
+                <th><input type="checkbox" value="true" name="active" th:checked="${user.isActive()}"/></th>
+                <th><input type="submit" value="Save"/></th>
+                <th><input type="reset" value="Cancel"/></th>
+            </tr>
+        </form>
+
+    </table>
+</body>
+</html>

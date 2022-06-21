@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Income Deposit edit</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<table>
+    <caption><h3>Transaction Income Deposit edit</h3></caption>
+    <tr>
+        <div th:insert="~{transaction_income_deposit :: transaction_income_deposit_thead_fragment}"></div>
+    </tr>
+
+    <form action="#" th:action="@{/transaction-income-deposit}" method="post">
+        <tr>
+
+            <input type="hidden" th:value="${(transactionIncomeDeposit.getId()!=0) ? transactionIncomeDeposit.getId() : ''}" name="id"/>
+            <th th:text="${(transactionIncomeDeposit.getId()!=0) ? transactionIncomeDeposit.getId() : ''}"></th>
+
+            <th>
+                <select name="selectedIncome">
+                    <option th:each="income : ${incomeList}"
+                            th:text="${income.getName}"
+                            th:value="${income.getId}"
+                            th:selected="${selectedIncome.getId() == income.getId()}">
+                    </option>
+                </select>
+            </th>
+
+            <th>
+                <select name="selectedDeposit">
+                    <option th:each="deposit : ${depositList}"
+                            th:text="${deposit.getName()}"
+                            th:value="${deposit.getId}"
+                            th:selected="${selectedDeposit.getId() == deposit.getId()}">
+                    </option>
+                </select>
+            </th>
+
+
+            <th><input type="text" th:value="${transactionIncomeDeposit.getMoney()}" name="Money" size=""/></th>
+            <th><input type="date" th:value="${transactionIncomeDeposit.getDate()}" name="Date" size=""/></th>
+
+            <th><input type="submit" value="Save"/></th>
+            <th><input type="reset" value="Cancel"/></th>
+
+        </tr>
+    </form>
+
+</table>
+
+</body>
+</html>

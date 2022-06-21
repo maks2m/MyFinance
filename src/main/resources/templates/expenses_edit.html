@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expenses edit</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<table>
+    <caption><h3>Expenses edit</h3></caption>
+    <tr>
+        <div th:insert="~{expenses :: expenses_thead_fragment}"></div>
+    </tr>
+
+    <form action="#" th:action="@{/expenses}" th:object="${expenses}" method="post">
+        <tr>
+
+            <input type="hidden" th:field="*{id}"/>
+            <th th:text="${(expenses.getId()!=0) ? expenses.getId() : ''}"></th>
+            <th><input type="text" th:field="*{name}" size=""/></th>
+            <th><input type="text" th:field="*{planMoney}" size=""/></th>
+            <th><input type="text" th:field="*{factMoney}" size=""/></th>
+
+            <th><input type="submit" value="Save"/></th>
+            <th><input type="reset" value="Cancel"/></th>
+
+        </tr>
+    </form>
+
+</table>
+
+</body>
+</html>

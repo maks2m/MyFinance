@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+    <div th:insert="~{header :: header}"></div>
+    <table class="table_index">
+        <tr>
+            <td><div th:insert="~{income :: income_fragment}"></div></td>
+            <td><div th:insert="~{transaction_income_deposit :: transaction_income_deposit_fragment}"></div></td></td>
+            <td><div th:insert="~{deposit :: deposit_fragment}"></div></td></td>
+            <td><div th:insert="~{transaction_deposit_expenses :: transaction_deposit_expenses_fragment}"></div></td></td>
+            <td><div th:insert="~{expenses :: expenses_fragment}"></div></td></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Deposit Expenses</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="transaction_deposit_expenses_fragment">
+    <a href="transaction-deposit-expenses/new">New Transaction Deposit Expenses</a>
+    <h3>Transaction Deposit Expenses lists</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="transaction_deposit_expenses_thead_fragment">
+                <th>id</th>
+                <th>Deposit</th>
+                <th>Expenses</th>
+                <th>Money</th>
+                <th>Date</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transactionDepositExpenses : ${transactionDepositExpensesList}">
+            <div th:fragment="transaction_deposit_expenses_tbody_fragment">
+                <td th:text="${transactionDepositExpenses.getId()}"></td>
+                <td th:text="${transactionDepositExpenses.getDeposit().getName()}"></td>
+                <td th:text="${transactionDepositExpenses.getExpenses().getName()}"></td>
+                <td th:text="${transactionDepositExpenses.getMoney()}"></td>
+                <td th:text="${{transactionDepositExpenses.getDate()}}"></td>
+
+                <td><a th:href="@{/transaction-deposit-expenses/{id}(id=${transactionDepositExpenses.getId()})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/transaction-deposit-expenses/{id}(id=${transactionDepositExpenses.getId()})}" method="post">
+                        <input type="submit" value="Del"/>
+                    </form>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

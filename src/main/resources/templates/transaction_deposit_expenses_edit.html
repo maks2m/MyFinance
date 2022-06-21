@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Deposit Expenses edit</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<table>
+    <caption><h3>Transaction Deposit Expenses edit</h3></caption>
+    <tr>
+        <div th:insert="~{transaction_deposit_expenses :: transaction_deposit_expenses_thead_fragment}"></div>
+    </tr>
+
+    <form action="#" th:action="@{/transaction-deposit-expenses}" th:object="${transactionDepositExpenses}" method="post">
+        <tr>
+
+            <input type="hidden" th:value="${(transactionDepositExpenses.getId()!=0) ? transactionDepositExpenses.getId() : ''}" name="id"/>
+            <th th:text="${(transactionDepositExpenses.getId()!=0) ? transactionDepositExpenses.getId() : ''}"></th>
+
+            <th>
+                <select name="selectedDeposit">
+                    <option th:each="deposit : ${depositList}"
+                            th:text="${deposit.getName()}"
+                            th:value="${deposit.getId}"
+                            th:selected="${selectedDeposit.getId() == deposit.getId()}">
+                    </option>
+                </select>
+            </th>
+
+            <th>
+                <select name="selectedExpenses">
+                    <option th:each="expenses : ${expensesList}"
+                            th:text="${expenses.getName}"
+                            th:value="${expenses.getId}"
+                            th:selected="${selectedExpenses.getId() == expenses.getId()}">
+                    </option>
+                </select>
+            </th>
+
+            <th><input type="text" th:value="${transactionDepositExpenses.getMoney()}" name="Money" size=""/></th>
+            <th><input type="date" th:value="${transactionDepositExpenses.getDate()}" name="Date" size=""/></th>
+
+            <th><input type="submit" value="Save"/></th>
+            <th><input type="reset" value="Cancel"/></th>
+
+        </tr>
+    </form>
+
+</table>
+
+</body>
+</html>

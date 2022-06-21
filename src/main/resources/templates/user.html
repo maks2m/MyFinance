@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="user_fragment">
+    <a href="user/new">New user</a>
+    <h3>Users list</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <div th:fragment="user_thead_fragment">
+                    <th>id</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Full name</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Role</th>
+                    <th>Active</th>
+                    <th colspan="2">Edit</th>
+                </div>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${userList}">
+                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getUsername()}"></td>
+                <td>********</td>
+                <td th:text="${user.getFullName()}"></td>
+                <td th:text="${user.getFirstName()}"></td>
+                <td th:text="${user.getLastName()}"></td>
+                <td>
+                    <div th:each="role : ${user.getRoles()}">
+                        <div th:text="${role.getRole()}"></div>
+                    </div>
+                </td>
+                <td th:text="${user.isActive()}"></td>
+
+                <td><a th:href="@{/user/{id}(id=${user.getId()})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/user/{id}(id=${user.getId()})}" method="post">
+                        <input type="submit" value="Del"/>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

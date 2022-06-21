@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div th:fragment="header">
+    <table class="table_header">
+        <tr>
+            <td><a href="/">Index</a></td>
+            <td></td>
+            <td><a href="/income">Income</a></td>
+            <td><a href="/transaction-income-deposit">TransactionIncomeDeposit</a></td>
+            <td><a href="/deposit">Deposit</a></td>
+            <td><a href="/transaction-deposit-expenses">TransactionDepositExpenses</a></td>
+            <td><a href="/expenses">Expenses</a></td>
+            <td></td>
+            <td></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a href="/user">Users</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a href="/role">Roles</a></td>
+        </tr>
+    </table>
+    <br><br>
+</div>
+</body>
+</html>
