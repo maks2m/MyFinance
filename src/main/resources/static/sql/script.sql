@@ -44,7 +44,7 @@ alter table if exists user_role add constraint buffer_user_fk foreign key (id_us
 
 insert into public.usr (active, first_name, full_name, last_name, password, username)
 values  (true, 'Михаил', 'Елкин М.С.', 'Елкин', 'elkin', 'elkin'),
-        (true, 'Иван', 'Иванов И.И.', 'Иванов', 'uvanov', 'uvanov'),
+        (true, 'Иван', 'Иванов И.И.', 'Иванов', 'ivanov', 'ivanov'),
         (true, 'Перт', 'Петров П.П.', 'Петров', 'petrov', 'petrov'),
         (true, 'Сидор', 'Сидоров С.С.', 'Сидоров', 'sidorov', 'sidorov');
 
@@ -63,22 +63,27 @@ values  (1, 1),
         (4, 1),
         (1, 2);
 
-insert into public.income (fact_money, name, plan_money)
-values  (30000, 'work', 30000),
-        (2000, 'deposit', 2000);
+insert into public.income (fact_money, name, plan_money, id_user)
+values  (30000, 'work', 30000, 1),
+        (2000, 'deposit', 2000, 1),
+        (2000, 'калым', 2000, 2);
 
 insert into public.deposit (money, name, id_user)
 values  (0, 'cash', 1),
-        (0, 'credit card', 1);
+        (0, 'credit card', 1),
+        (500, 'кошелек', 2);
 
 insert into public.expenses (fact_money, name, plan_money, id_user)
 values  (2000, 'auto', 3000, 1),
-        (30000, 'food', 8000, 1);
+        (30000, 'food', 8000, 1),
+        (1500, 'сигареты', 1000, 2);
 
 insert into public.transaction_income_deposit (date, money, id_deposit, id_income, id_user)
 values  ('2022-05-01', 15000, 2, 1, 1),
         ('2022-05-15', 15000, 2, 1, 1),
-        ('2022-05-05', 2000, 1, 2, 1);
+        ('2022-05-05', 2000, 1, 2, 1),
+        ('2022-06-22', 1000, 3, 3, 2),
+        ('2022-06-01', 1000, 3, 3, 2);
 
 insert into public.transaction_deposit_expenses (date, money, id_deposit, id_expenses, id_user)
 values  ('2022-05-01', 5000, 2, 2, 1),
@@ -87,5 +92,8 @@ values  ('2022-05-01', 5000, 2, 2, 1),
         ('2022-05-16', 5000, 2, 2, 1),
         ('2022-05-21', 5000, 2, 2, 1),
         ('2022-05-26', 5000, 2, 2, 1),
-        ('2022-05-07', 2000, 1, 1, 1);
+        ('2022-05-07', 2000, 1, 1, 1),
+        ('2022-06-21', 500, 3, 3, 2),
+        ('2022-06-15', 500, 3, 3, 2),
+        ('2022-06-13', 500, 3, 3, 2);
 

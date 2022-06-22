@@ -7,55 +7,44 @@ import org.springframework.ui.Model;
 import ru.elkin.myfinance.entity.Deposit;
 import ru.elkin.myfinance.entity.Income;
 import ru.elkin.myfinance.entity.TransactionIncomeDeposit;
+import ru.elkin.myfinance.entity.User;
 import ru.elkin.myfinance.repo.DepositRepo;
 import ru.elkin.myfinance.repo.IncomeRepo;
 import ru.elkin.myfinance.repo.TransactionIncomeDepositRepo;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class TransactionIncomeDepositService implements TransferEntityService<TransactionIncomeDeposit> {
+public class TransactionIncomeDepositServiceImpl implements TransactionService<TransactionIncomeDeposit> {
 
     private final DepositRepo depositRepo;
     private final IncomeRepo incomeRepo;
     private final TransactionIncomeDepositRepo transactionIncomeDepositRepo;
 
     @Autowired
-    public TransactionIncomeDepositService(DepositRepo depositRepo,
-                                           IncomeRepo incomeRepo,
-                                           TransactionIncomeDepositRepo transactionIncomeDepositRepo) {
+    public TransactionIncomeDepositServiceImpl(DepositRepo depositRepo,
+                                               IncomeRepo incomeRepo,
+                                               TransactionIncomeDepositRepo transactionIncomeDepositRepo) {
         this.depositRepo = depositRepo;
         this.incomeRepo = incomeRepo;
         this.transactionIncomeDepositRepo = transactionIncomeDepositRepo;
     }
 
     @Override
-    public void list(Model model) {
-        model.addAttribute("transactionIncomeDepositList", transactionIncomeDepositRepo.findAllTransaction());
+    public List<TransactionIncomeDeposit> list(User user) {
+        return transactionIncomeDepositRepo.findAllTransaction(user);
     }
 
     @Override
-    public void create(Model model) {
-        model.addAttribute("transactionIncomeDeposit",new TransactionIncomeDeposit());
-        model.addAttribute("incomeList", incomeRepo.findAllByOrderById());
-        model.addAttribute("selectedIncome", new Income());
-        model.addAttribute("depositList", depositRepo.findAllByOrderById());
-        model.addAttribute("selectedDeposit", new Deposit());
+    public TransactionIncomeDeposit create() {
+        return new TransactionIncomeDeposit();
     }
 
     @Override
-    public void edit(TransactionIncomeDeposit item, Model model) {
-        model.addAttribute("transactionIncomeDeposit", item);
-        model.addAttribute("incomeList", incomeRepo.findAllByOrderById());
-        model.addAttribute("selectedIncome", item.getIncome());
-        model.addAttribute("depositList", depositRepo.findAllByOrderById());
-        model.addAttribute("selectedDeposit", item.getDeposit());
-    }
-
-    @Override
-    public void save(TransactionIncomeDeposit itemFromDB, Map<String, String> model) throws CloneNotSupportedException {
+    public void save(TransactionIncomeDeposit itemFromDB, Map<String, String> model, User user) throws CloneNotSupportedException {
 
         TransactionIncomeDeposit oldItem = new TransactionIncomeDeposit();
 
@@ -69,6 +58,7 @@ public class TransactionIncomeDepositService implements TransferEntityService<Tr
 
         itemFromDB.setIncome(incomeRepo.findById(Long.valueOf(model.get("selectedIncome"))).orElseThrow());
         itemFromDB.setDeposit(depositRepo.findById(Long.valueOf(model.get("selectedDeposit"))).orElseThrow());
+        itemFromDB.setUser(user);
 
         for (String key : model.keySet()) {
             switch (key){

@@ -17,7 +17,7 @@
         <thead>
         <tr>
             <div th:fragment="income_thead_fragment">
-                <th>id</th>
+<!--                <th>id</th>-->
                 <th>Name</th>
                 <th>PlanMoney</th>
                 <th>FactMoney</th>
@@ -28,7 +28,7 @@
         <tbody>
         <tr th:each="income : ${incomeList}">
             <div th:fragment="income_tbody_fragment">
-                <td th:text="${income.getId()}"></td>
+<!--                <td th:text="${income.getId()}"></td>-->
                 <td th:text="${income.getName()}"></td>
                 <td th:text="${income.getPlanMoney()}"></td>
                 <td th:text="${income.getFactMoney()}"></td>

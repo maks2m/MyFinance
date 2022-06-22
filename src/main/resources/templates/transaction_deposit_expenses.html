@@ -17,7 +17,7 @@
         <thead>
         <tr>
             <div th:fragment="transaction_deposit_expenses_thead_fragment">
-                <th>id</th>
+<!--                <th>id</th>-->
                 <th>Deposit</th>
                 <th>Expenses</th>
                 <th>Money</th>
@@ -29,7 +29,7 @@
         <tbody>
         <tr th:each="transactionDepositExpenses : ${transactionDepositExpensesList}">
             <div th:fragment="transaction_deposit_expenses_tbody_fragment">
-                <td th:text="${transactionDepositExpenses.getId()}"></td>
+<!--                <td th:text="${transactionDepositExpenses.getId()}"></td>-->
                 <td th:text="${transactionDepositExpenses.getDeposit().getName()}"></td>
                 <td th:text="${transactionDepositExpenses.getExpenses().getName()}"></td>
                 <td th:text="${transactionDepositExpenses.getMoney()}"></td>

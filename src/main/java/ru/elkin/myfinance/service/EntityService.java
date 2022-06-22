@@ -1,11 +1,12 @@
 package ru.elkin.myfinance.service;
 
-import org.springframework.ui.Model;
+import ru.elkin.myfinance.entity.User;
+
+import java.util.List;
 
 public interface EntityService<T> {
-    void list(Model model);
-    void create(Model model);
-    void edit(T item, Model model);
-    void save(T itemFromDB, T item) throws CloneNotSupportedException;
+    List<T> list(User user);
+    T create();
+    void save(T itemFromDB, T item, User user) throws CloneNotSupportedException;
     void delete(T item);
 }

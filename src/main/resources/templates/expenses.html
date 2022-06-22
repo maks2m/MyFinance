@@ -17,7 +17,7 @@
         <thead>
         <tr>
             <div th:fragment="expenses_thead_fragment">
-                <th>id</th>
+<!--                <th>id</th>-->
                 <th>Name</th>
                 <th>PlanMoney</th>
                 <th>FactMoney</th>
@@ -28,7 +28,7 @@
         <tbody>
         <tr th:each="expenses : ${expensesList}">
             <div th:fragment="expenses_tbody_fragment">
-                <td th:text="${expenses.getId()}"></td>
+<!--                <td th:text="${expenses.getId()}"></td>-->
                 <td th:text="${expenses.getName()}"></td>
                 <td th:text="${expenses.getPlanMoney()}"></td>
                 <td th:text="${expenses.getFactMoney()}"></td>

@@ -3,39 +3,37 @@ package ru.elkin.myfinance.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import ru.elkin.myfinance.entity.Expenses;
+import ru.elkin.myfinance.entity.User;
 import ru.elkin.myfinance.repo.ExpensesRepo;
 
+import java.util.List;
+
 @Service
-public class ExpensesService implements EntityService<Expenses> {
+public class EntityExpensesServiceImpl implements EntityService<Expenses> {
 
     private final ExpensesRepo expensesRepo;
 
     @Autowired
-    public ExpensesService(ExpensesRepo expensesRepo) {
+    public EntityExpensesServiceImpl(ExpensesRepo expensesRepo) {
         this.expensesRepo = expensesRepo;
     }
 
     @Override
-    public void list(Model model) {
-        model.addAttribute("expensesList", expensesRepo.findAllByOrderById());
+    public List<Expenses> list(User user) {
+        return expensesRepo.findAllByUserOrderById(user);
     }
 
     @Override
-    public void create(Model model) {
-        model.addAttribute("expenses", new Expenses());
+    public Expenses create() {
+        return new Expenses();
     }
 
     @Override
-    public void edit(Expenses item, Model model) {
-        model.addAttribute("expenses", item);
-    }
-
-    @Override
-    public void save(Expenses itemFromDB, Expenses item) {
+    public void save(Expenses itemFromDB, Expenses item, User user) {
         if (itemFromDB == null) itemFromDB = new Expenses();
         BeanUtils.copyProperties(item, itemFromDB, "id");
+        itemFromDB.setUser(user);
         expensesRepo.save(itemFromDB);
     }
 

@@ -3,39 +3,37 @@ package ru.elkin.myfinance.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import ru.elkin.myfinance.entity.Deposit;
+import ru.elkin.myfinance.entity.User;
 import ru.elkin.myfinance.repo.DepositRepo;
 
+import java.util.List;
+
 @Service
-public class DepositService implements EntityService<Deposit> {
+public class EntityDepositServiceImpl implements EntityService<Deposit> {
 
     private final DepositRepo depositRepo;
 
     @Autowired
-    public DepositService(DepositRepo depositRepo) {
+    public EntityDepositServiceImpl(DepositRepo depositRepo) {
         this.depositRepo = depositRepo;
     }
 
     @Override
-    public void list(Model model) {
-        model.addAttribute("depositList", depositRepo.findAllByOrderById());
+    public List<Deposit> list(User user) {
+        return depositRepo.findAllByUserOrderById(user);
     }
 
     @Override
-    public void create(Model model) {
-        model.addAttribute("deposit", new Deposit());
+    public Deposit create() {
+        return new Deposit();
     }
 
     @Override
-    public void edit(Deposit item, Model model) {
-        model.addAttribute("deposit", item);
-    }
-
-    @Override
-    public void save(Deposit itemFromDB, Deposit item) {
+    public void save(Deposit itemFromDB, Deposit item, User user) {
         if (itemFromDB == null) itemFromDB = new Deposit();
         BeanUtils.copyProperties(item, itemFromDB, "id");
+        itemFromDB.setUser(user);
         depositRepo.save(itemFromDB);
     }
 

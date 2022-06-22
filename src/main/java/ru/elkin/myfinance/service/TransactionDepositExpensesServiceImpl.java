@@ -7,55 +7,44 @@ import org.springframework.ui.Model;
 import ru.elkin.myfinance.entity.Deposit;
 import ru.elkin.myfinance.entity.Expenses;
 import ru.elkin.myfinance.entity.TransactionDepositExpenses;
+import ru.elkin.myfinance.entity.User;
 import ru.elkin.myfinance.repo.DepositRepo;
 import ru.elkin.myfinance.repo.ExpensesRepo;
 import ru.elkin.myfinance.repo.TransactionDepositExpensesRepo;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class TransactionDepositExpensesService implements TransferEntityService<TransactionDepositExpenses> {
+public class TransactionDepositExpensesServiceImpl implements TransactionService<TransactionDepositExpenses> {
 
     private final DepositRepo depositRepo;
     private final ExpensesRepo expensesRepo;
     private final TransactionDepositExpensesRepo transactionDepositExpensesRepo;
 
     @Autowired
-    public TransactionDepositExpensesService(DepositRepo depositRepo,
-                                             ExpensesRepo expensesRepo,
-                                             TransactionDepositExpensesRepo transactionDepositExpensesRepo) {
+    public TransactionDepositExpensesServiceImpl(DepositRepo depositRepo,
+                                                 ExpensesRepo expensesRepo,
+                                                 TransactionDepositExpensesRepo transactionDepositExpensesRepo) {
         this.depositRepo = depositRepo;
         this.expensesRepo = expensesRepo;
         this.transactionDepositExpensesRepo = transactionDepositExpensesRepo;
     }
 
     @Override
-    public void list(Model model) {
-        model.addAttribute("transactionDepositExpensesList", transactionDepositExpensesRepo.findAllTransaction());
+    public List<TransactionDepositExpenses> list(User user) {
+        return transactionDepositExpensesRepo.findAllTransaction(user);
     }
 
     @Override
-    public void create(Model model) {
-        model.addAttribute("transactionDepositExpenses",new TransactionDepositExpenses());
-        model.addAttribute("depositList", depositRepo.findAllByOrderById());
-        model.addAttribute("selectedDeposit", new Deposit());
-        model.addAttribute("expensesList", expensesRepo.findAllByOrderById());
-        model.addAttribute("selectedExpenses", new Expenses());
+    public TransactionDepositExpenses create() {
+        return new TransactionDepositExpenses();
     }
 
     @Override
-    public void edit(TransactionDepositExpenses item, Model model) {
-        model.addAttribute("transactionDepositExpenses", item);
-        model.addAttribute("depositList", depositRepo.findAllByOrderById());
-        model.addAttribute("selectedDeposit", item.getDeposit());
-        model.addAttribute("expensesList", expensesRepo.findAllByOrderById());
-        model.addAttribute("selectedExpenses", item.getExpenses());
-    }
-
-    @Override
-    public void save(TransactionDepositExpenses itemFromDB, Map<String, String> model) throws CloneNotSupportedException {
+    public void save(TransactionDepositExpenses itemFromDB, Map<String, String> model, User user) throws CloneNotSupportedException {
 
         TransactionDepositExpenses oldItem = new TransactionDepositExpenses();
         if (itemFromDB == null) {
@@ -68,6 +57,7 @@ public class TransactionDepositExpensesService implements TransferEntityService<
 
         itemFromDB.setDeposit(depositRepo.findById(Long.valueOf(model.get("selectedDeposit"))).orElseThrow());
         itemFromDB.setExpenses(expensesRepo.findById(Long.valueOf(model.get("selectedExpenses"))).orElseThrow());
+        itemFromDB.setUser(user);
 
         for (String key : model.keySet()) {
             switch (key){

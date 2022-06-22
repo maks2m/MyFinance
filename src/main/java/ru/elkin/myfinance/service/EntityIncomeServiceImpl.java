@@ -3,39 +3,37 @@ package ru.elkin.myfinance.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import ru.elkin.myfinance.entity.Income;
+import ru.elkin.myfinance.entity.User;
 import ru.elkin.myfinance.repo.IncomeRepo;
 
+import java.util.List;
+
 @Service
-public class IncomeService implements EntityService<Income> {
+public class EntityIncomeServiceImpl implements EntityService<Income> {
 
     private final IncomeRepo incomeRepo;
 
     @Autowired
-    public IncomeService(IncomeRepo incomeRepo) {
+    public EntityIncomeServiceImpl(IncomeRepo incomeRepo) {
         this.incomeRepo = incomeRepo;
     }
 
     @Override
-    public void list(Model model) {
-        model.addAttribute("incomeList", incomeRepo.findAllByOrderById());
+    public List<Income> list(User user) {
+        return incomeRepo.findAllByUserOrderById(user);
     }
 
     @Override
-    public void create(Model model) {
-        model.addAttribute("income", new Income());
+    public Income create() {
+        return new Income();
     }
 
     @Override
-    public void edit(Income item, Model model) {
-        model.addAttribute("income", item);
-    }
-
-    @Override
-    public void save(Income itemFromDB, Income item) {
+    public void save(Income itemFromDB, Income item, User user) {
         if (itemFromDB == null) itemFromDB = new Income();
         BeanUtils.copyProperties(item, itemFromDB, "id");
+        itemFromDB.setUser(user);
         incomeRepo.save(itemFromDB);
     }
 
