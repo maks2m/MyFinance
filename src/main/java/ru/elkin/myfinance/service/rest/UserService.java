@@ -2,17 +2,24 @@ package ru.elkin.myfinance.service.rest;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import ru.elkin.myfinance.entity.AbstractEntity;
 import ru.elkin.myfinance.entity.User;
 import ru.elkin.myfinance.exception.NotFoundException;
+import ru.elkin.myfinance.repo.RoleRepo;
 import ru.elkin.myfinance.repo.UserRepo;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService extends AbstractService<User, UserRepo> {
 
-    public UserService(UserRepo repository) {
+    private final RoleRepo roleRepo;
+
+    public UserService(UserRepo repository, RoleRepo roleRepo) {
         super(repository);
+        this.roleRepo = roleRepo;
     }
 
     @Override
@@ -28,6 +35,7 @@ public class UserService extends AbstractService<User, UserRepo> {
     @Override
     public User create(User entity, User user) {
         entity.setId(null);
+        entity.setRoles(new HashSet<>(roleRepo.findAllById(entity.getRoles().stream().map(AbstractEntity::getId).collect(Collectors.toSet()))));
         return super.repository.save(entity);
     }
 
