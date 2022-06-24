@@ -18,12 +18,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table(name = "transaction_income_deposit")
-public class TransactionIncomeDeposit implements Cloneable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class TransactionIncomeDeposit extends AbstractEntity implements Cloneable {
 
     @Column(name = "money")
     private Long money;

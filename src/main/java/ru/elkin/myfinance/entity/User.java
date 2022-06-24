@@ -15,16 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "usr")
-@NamedQuery(
-        name = "find_all_users",
-        query = "SELECT u FROM User u"
-)
-public class User implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class User extends AbstractEntity implements UserDetails {
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
@@ -48,7 +39,6 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "id_user", foreignKey = @ForeignKey(name = "buffer_user_fk")),
             inverseJoinColumns = @JoinColumn(name = "id_role", foreignKey = @ForeignKey(name = "buffer_role_fk")))
-    @ToString.Exclude
     private Set<Role> roles = new HashSet<>();
 
     @Override

@@ -1,15 +1,12 @@
 package ru.elkin.myfinance.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import ru.elkin.myfinance.entity.User;
 
 import java.util.List;
 
-public interface UserRepo extends JpaRepository<User, Long> {
-
-    @Query("select u from User u join fetch u.roles where u.username=:username")
-    User findByUsername(String username);
+@Repository
+public interface UserRepo extends BaseRepository<User> {
 
     List<User> findAllByOrderById();
 

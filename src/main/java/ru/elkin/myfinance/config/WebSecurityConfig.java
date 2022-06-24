@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.elkin.myfinance.service.UserServiceImpl;
+import ru.elkin.myfinance.service.mvc.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -27,13 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                    //.antMatchers("/", "/home").permitAll()
+                    .csrf().disable()
+                    .authorizeRequests()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .permitAll()
+                .and()
+                    .httpBasic()
                 .and()
                     .logout()
                     .permitAll();

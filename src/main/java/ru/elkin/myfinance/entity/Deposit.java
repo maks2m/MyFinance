@@ -13,12 +13,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "deposit")
-public class Deposit implements Cloneable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Deposit extends AbstractEntity implements Cloneable {
 
     @Column(name = "name")
     private String name;
